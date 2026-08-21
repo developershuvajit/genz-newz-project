@@ -1,0 +1,72 @@
+<?php
+$router->get('/', 'Home@index');
+$router->get('/login', 'Auth@loginForm');
+$router->post('/login', 'Auth@login');
+$router->get('/logout', 'Auth@logout');
+$router->get('/archive', 'Archive@index');
+$router->get('/edition/{slug}', 'Edition@view');
+$router->get('/edition/{slug}/page/{page}', 'Page@view');
+$router->get('/article/{slug}', 'Article@view');
+$router->get('/category/{slug}', 'Category@view');
+$router->get('/search', 'Search@index');
+$router->get('/reporter/verify/{id}', 'ReporterVerify@index');
+$router->get('/download/edition/{slug}', 'Download@edition');
+
+// Admin Routes
+$router->get('/admin/login', 'AdminAuth@loginForm');
+$router->post('/admin/login', 'AdminAuth@login');
+$router->get('/admin/logout', 'AdminAuth@logout');
+$router->get('/admin/dashboard', 'AdminDashboard@index');
+$router->get('/admin/editions', 'AdminEditions@index');
+$router->get('/admin/editions/create', 'AdminEditions@create');
+$router->post('/admin/editions/store', 'AdminEditions@store');
+$router->get('/admin/editions/edit/{id}', 'AdminEditions@edit');
+$router->post('/admin/editions/update/{id}', 'AdminEditions@update');
+$router->get('/admin/editions/delete/{id}', 'AdminEditions@delete');
+$router->get('/admin/editions/{id}/pages', 'AdminPages@index');
+$router->post('/admin/pages/upload', 'AdminPages@upload');
+$router->post('/admin/pages/reorder', 'AdminPages@reorder');
+$router->get('/admin/pages/delete/{id}', 'AdminPages@delete');
+$router->get('/admin/articles', 'AdminArticles@index');
+$router->get('/admin/articles/pending', 'AdminArticles@pending');
+$router->get('/admin/articles/published', 'AdminArticles@published');
+$router->get('/admin/articles/view/{id}', 'AdminArticles@view');
+$router->post('/admin/articles/approve/{id}', 'AdminArticles@approve');
+$router->post('/admin/articles/reject/{id}', 'AdminArticles@reject');
+$router->post('/admin/articles/publish/{id}', 'AdminArticles@publish');
+$router->get('/admin/categories', 'AdminCategories@index');
+$router->get('/admin/edition-types', 'AdminEditionTypes@index');
+$router->get('/admin/reporters', 'AdminReporters@index');
+$router->get('/admin/reporters/create', 'AdminReporters@create');
+$router->post('/admin/reporters/store', 'AdminReporters@store');
+$router->get('/admin/reporters/view/{id}', 'AdminReporters@view');
+$router->get('/admin/reporters/edit/{id}', 'AdminReporters@edit');
+$router->post('/admin/reporters/update/{id}', 'AdminReporters@update');
+$router->get('/admin/reporters/status/{id}', 'AdminReporters@toggleStatus');
+$router->get('/admin/reporters/id-card/{id}', 'AdminReporters@idCard');
+$router->get('/admin/settings', 'AdminSettings@index');
+$router->post('/admin/settings/update', 'AdminSettings@update');
+$router->get('/admin/notifications', 'AdminNotifications@index');
+$router->get('/admin/activity-logs', 'AdminActivityLogs@index');
+$router->get('/admin/profile', 'AdminProfile@index');
+$router->post('/admin/profile/update', 'AdminProfile@update');
+
+// Reporter Routes
+$router->get('/reporter/login', 'ReporterAuth@loginForm');
+$router->post('/reporter/login', 'ReporterAuth@login');
+$router->get('/reporter/logout', 'ReporterAuth@logout');
+$router->get('/reporter/dashboard', 'ReporterDashboard@index');
+$router->get('/reporter/articles', 'ReporterArticles@index');
+$router->get('/reporter/articles/create', 'ReporterArticles@create');
+$router->post('/reporter/articles/store', 'ReporterArticles@store');
+$router->get('/reporter/articles/edit/{id}', 'ReporterArticles@edit');
+$router->post('/reporter/articles/update/{id}', 'ReporterArticles@update');
+$router->get('/reporter/articles/view/{id}', 'ReporterArticles@view');
+$router->post('/reporter/articles/submit/{id}', 'ReporterArticles@submit');
+$router->post('/reporter/articles/delete/{id}', 'ReporterArticles@delete');
+$router->get('/reporter/id-card', 'ReporterIdCard@index');
+$router->get('/reporter/notifications', 'ReporterNotifications@index');
+$router->post('/reporter/notifications/read/{id}', 'ReporterNotifications@markRead');
+$router->get('/reporter/profile', 'ReporterProfile@index');
+$router->post('/reporter/profile/update', 'ReporterProfile@update');
+?>
