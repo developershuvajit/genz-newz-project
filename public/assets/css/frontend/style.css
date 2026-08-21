@@ -1,0 +1,33 @@
+:root {
+    --primary-green: #0B6B3A;
+    --dark-green: #064D2B;
+    --deep-green: #03351E;
+    --accent-green: #19A463;
+    --light-green: #EAF7EF;
+    --white: #FFFFFF;
+    --text-dark: #1F2937;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Noto Sans Bengali', -apple-system, BlinkMacSystemFont, sans-serif;
+    color: var(--text-dark);
+    background: var(--white);
+    line-height: 1.6;
+}
+
+h1 {
+    color: var(--primary-green);
+    text-align: center;
+    margin-top: 2rem;
+}
+
+p {
+    text-align: center;
+    color: var(--text-dark);
+}
