@@ -22,9 +22,13 @@ require_once ROOT_PATH . '/core/Model.php';
 require_once ROOT_PATH . '/core/Controller.php';
 require_once ROOT_PATH . '/core/Auth.php';
 require_once ROOT_PATH . '/core/Router.php';
+
+// Initialize Router FIRST
+$router = new Router();
+
+// Then load routes
 require_once ROOT_PATH . '/routes/web.php';
 
-// Initialize Router
-$router = new Router();
+// Dispatch router
 $router->dispatch();
 ?>

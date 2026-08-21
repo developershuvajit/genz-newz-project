@@ -1,4 +1,5 @@
 <?php
+// $router is already defined in config/config.php
 $router->get('/', 'Home@index');
 $router->get('/login', 'Auth@loginForm');
 $router->post('/login', 'Auth@login');
