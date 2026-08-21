@@ -1,0 +1,127 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1700" width="100%" height="100%" style="background:#FAF8F5; font-family:'Noto Sans Bengali', Arial, sans-serif;">
+  <defs>
+    <style>
+      .hdr-title { font-family: 'Cinzel', 'Playfair Display', serif; font-weight:900; fill: #0B6B3A; font-size:62px; letter-spacing:2px; }
+      .tagline { font-size: 18px; fill: #4B5563; font-style:italic; }
+      .meta-bar { font-size: 16px; fill: #1F2937; font-weight:600; }
+      .h-headline { font-size: 34px; font-weight:800; fill: #111827; line-height:1.2; }
+      .sub-head { font-size: 20px; font-weight:600; fill: #064D2B; }
+      .body-text { font-size: 15px; fill: #374151; line-height: 1.6; }
+      .column-box { fill: #FFFFFF; stroke: #E5E7EB; stroke-width:1; }
+      .badge { fill: #0B6B3A; rx: 4; }
+      .badge-text { fill: #FFFFFF; font-size: 14px; font-weight: bold; }
+    </style>
+  </defs>
+
+  <!-- Paper Outer Frame -->
+  <rect x="15" y="15" width="1170" height="1670" fill="#FFFFFF" stroke="#D1D5DB" stroke-width="2"/>
+  <rect x="25" y="25" width="1150" height="1650" fill="none" stroke="#9CA3AF" stroke-width="0.75" stroke-dasharray="4,2"/>
+
+  <!-- Top Banner Header -->
+  <rect x="35" y="35" width="1130" height="140" fill="#F8FAFC" stroke="#E2E8F0"/>
+  
+  <text x="600" y="95" text-anchor="middle" class="hdr-title">GENZNEWZ</text>
+  <text x="600" y="125" text-anchor="middle" class="tagline">Your News. Your Voice. — দৈনিক ডিজিটাল ই-পেপার</text>
+  
+  <!-- Date & Page Meta Bar -->
+  <rect x="35" y="185" width="1130" height="36" fill="#0B6B3A"/>
+  <text x="50" y="209" fill="#FFFFFF" font-size="16" font-weight="bold">কলকাতা ও রাজ্য সংস্করণ</text>
+  <text x="600" y="209" text-anchor="middle" fill="#FFFFFF" font-size="16">২১ আগস্ট ২০২৬, শুক্রবার</text>
+  <text x="1150" y="209" text-anchor="end" fill="#FFFFFF" font-size="16" font-weight="bold">পৃষ্ঠা: ৭ / ৮</text>
+
+  <!-- Page Section Header -->
+  <rect x="35" y="235" width="1130" height="42" fill="#EAF7EF" stroke="#19A463"/>
+  <text x="50" y="262" class="sub-head" font-size="20">ক্রীড়াঙ্গন — ডার্বি ও ক্রিকেট লাইভ</text>
+
+  <!-- Lead Story Block (Col 1 & 2) -->
+  <rect x="35" y="290" width="740" height="540" fill="#FFFFFF" stroke="#E5E7EB"/>
+  
+  <!-- Lead Image Box -->
+  <rect x="50" y="305" width="710" height="280" fill="#F1F5F9" rx="4"/>
+  <circle cx="405" cy="425" r="50" fill="#0B6B3A" opacity="0.15"/>
+  <polygon points="385,395 385,455 435,425" fill="#0B6B3A"/>
+  <text x="405" y="520" text-anchor="middle" fill="#64748B" font-size="18" font-weight="bold">GenzNewz বিশেষ চিত্র প্রতিবেদন — ক্রীড়াঙ্গন — ডার্বি ও ক্রিকেট লাইভ</text>
+
+  <text x="50" y="625" class="h-headline">রাজ্য বাজেটে স্বাস্থ্য ও গ্রামীণ পরিকাঠামোয় ঐতিহাসিক বরাদ্দ ঘোষণা</text>
+  <text x="50" y="660" class="sub-head">তরুণ উদ্যোক্তাদের জন্য সুদহীন স্টার্টআপ ঋণ ও কর্মসংস্থান তহবিলের বিপুল সুযোগ</text>
+  
+  <text x="50" y="700" class="body-text">
+    <tspan x="50" dy="0">কলকাতা: রাজ্য বিধানসভায় আজ পেশ করা হল ২০২৬-২৭ অর্থবর্ষের সার্বিক বাজেট। অর্থমন্ত্রী বাজেট বক্তৃতায় স্পষ্ট</tspan>
+    <tspan x="50" dy="24">করেছেন যে রাজ্যের অর্থনৈতিক প্রবৃদ্ধির গতি বজায় রাখতে গ্রামীণ পরিকাঠামো, সড়ক যোগাযোগ এবং ডিজিটাল স্বাস্থ্যসেবাকে</tspan>
+    <tspan x="50" dy="24">সর্বোচ্চ অগ্রাধিকার দেওয়া হয়েছে। স্বাস্থ্য সাথী প্রকল্পের আওতায় অতিরিক্ত পরিষেবা সংযোজনের পাশাপাশি প্রতিটি</tspan>
+    <tspan x="50" dy="24">মহকুমা হাসপাতালে ক্রিটিক্যাল কেয়ার ইউনিট (CCU) স্থাপনের জন্য বিশেষ অর্থ বরাদ্দ করা হয়েছে।</tspan>
+  </text>
+
+  <!-- Side Column Stories (Col 3) -->
+  <rect x="790" y="290" width="375" height="540" fill="#F9FAFB" stroke="#E5E7EB"/>
+  <rect x="805" y="305" width="345" height="32" fill="#064D2B" rx="3"/>
+  <text x="977" y="327" text-anchor="middle" fill="#FFFFFF" font-size="16" font-weight="bold">জরুরি বুলেটিন</text>
+
+  <text x="805" y="370" font-size="20" font-weight="bold" fill="#111827">অরেঞ্জ মেট্রো লাইনে ট্রায়াল রান</text>
+  <text x="805" y="398" class="body-text">
+    <tspan x="805" dy="0">বিমানবন্দর মেট্রো সংযোগে বড় সাফল্য। আধুনিক</tspan>
+    <tspan x="805" dy="22">CBTC সিগন্যালিং ব্যবস্থা বসানোর কাজ প্রায় শেষ।</tspan>
+    <tspan x="805" dy="22">প্রতি ৫ মিনিটে চলবে ট্রেন।</tspan>
+  </text>
+  <line x1="805" y1="475" x2="1150" y2="475" stroke="#D1D5DB"/>
+
+  <text x="805" y="515" font-size="20" font-weight="bold" fill="#111827">শেয়ার বাজারে ৮৫,০০০ মাইলফলক</text>
+  <text x="805" y="543" class="body-text">
+    <tspan x="805" dy="0">সেনসেক্স এক লাফে ৭৫০ পয়েন্ট বৃদ্ধি পেয়ে</tspan>
+    <tspan x="805" dy="22">সর্বকালের নয়া রেকর্ড স্পর্শ করল।</tspan>
+    <tspan x="805" dy="22">আইটি ও ব্যাংকিং খাতে জোয়ার।</tspan>
+  </text>
+  <line x1="805" y1="620" x2="1150" y2="620" stroke="#D1D5DB"/>
+
+  <rect x="805" y="640" width="345" height="170" fill="#EAF7EF" stroke="#0B6B3A" stroke-dasharray="3,3" rx="4"/>
+  <text x="977" y="680" text-anchor="middle" fill="#0B6B3A" font-size="18" font-weight="bold">বিজ্ঞাপন ও বিশেষ যোগাযোগ</text>
+  <text x="977" y="720" text-anchor="middle" fill="#374151" font-size="15">GenzNewz ই-পেপারে বিজ্ঞাপন দিতে কল করুন:</text>
+  <text x="977" y="755" text-anchor="middle" fill="#064D2B" font-size="20" font-weight="900">+91 33 2489 7700</text>
+  <text x="977" y="785" text-anchor="middle" fill="#6B7280" font-size="14">advt@genznewz.com</text>
+
+  <!-- Bottom Grid Stories (3 Columns) -->
+  <!-- Col 1 -->
+  <rect x="35" y="850" width="360" height="740" fill="#FFFFFF" stroke="#E5E7EB"/>
+  <rect x="50" y="865" width="330" height="160" fill="#F3F4F6" rx="3"/>
+  <text x="215" y="955" text-anchor="middle" fill="#6B7280" font-size="16">কলকাতা ডার্বি ম্যাচ রিপোর্ট</text>
+  <text x="50" y="1060" font-size="22" font-weight="bold" fill="#111827">যুবভারতীতে শেষ মুহূর্তের গোলে জয়</text>
+  <text x="50" y="1100" class="body-text">
+    <tspan x="50" dy="0">৬২ হাজার দর্শকের সামনে টানটান লড়াইয়ে</tspan>
+    <tspan x="50" dy="24">৮৮ মিনিটে জয়সূচক গোল দিমিত্রিয়সের।</tspan>
+    <tspan x="50" dy="24">সবুজ-মেরুন ব্রিগেড লিগ তালিকার শীর্ষে</tspan>
+    <tspan x="50" dy="24">নিজেদের অবস্থান আরও মজবুত করল।</tspan>
+    <tspan x="50" dy="24">ম্যাচ শেষে উচ্ছ্বসিত কোচ দলের নিষ্ঠার</tspan>
+    <tspan x="50" dy="24">ভূয়সী প্রশংসা করেন।</tspan>
+  </text>
+
+  <!-- Col 2 -->
+  <rect x="415" y="850" width="360" height="740" fill="#FFFFFF" stroke="#E5E7EB"/>
+  <rect x="430" y="865" width="330" height="160" fill="#F3F4F6" rx="3"/>
+  <text x="595" y="955" text-anchor="middle" fill="#6B7280" font-size="16">প্রযুক্তি ও ভবিষ্যৎ উদ্ভাবন</text>
+  <text x="430" y="1060" font-size="22" font-weight="bold" fill="#111827">সল্টলেকে জাতীয় AI রিসার্চ হাব</text>
+  <text x="430" y="1100" class="body-text">
+    <tspan x="430" dy="0">আইআইটি ও প্রেসিডেন্সি বিশ্ববিদ্যালয়ের যৌথ</tspan>
+    <tspan x="430" dy="24">উদ্যোগে ভারতে প্রথম কৃত্রিম বুদ্ধিমত্তা ও</tspan>
+    <tspan x="430" dy="24">কোয়ান্টাম কম্পিউটিং হাব স্থাপিত হচ্ছে।</tspan>
+    <tspan x="430" dy="24">স্বাস্থ্যবিজ্ঞান ও সাইবার সুরক্ষায় বিরাট</tspan>
+    <tspan x="430" dy="24">অগ্রগতির সম্ভাবনা দেখছেন বিজ্ঞানীরা।</tspan>
+  </text>
+
+  <!-- Col 3 -->
+  <rect x="795" y="850" width="370" height="740" fill="#FFFFFF" stroke="#E5E7EB"/>
+  <rect x="810" y="865" width="340" height="160" fill="#F3F4F6" rx="3"/>
+  <text x="980" y="955" text-anchor="middle" fill="#6B7280" font-size="16">সংস্কৃতি ও চলচ্চিত্র</text>
+  <text x="810" y="1060" font-size="22" font-weight="bold" fill="#111827">আন্তর্জাতিক চলচ্চিত্র উৎসবে সম্মান</text>
+  <text x="810" y="1100" class="body-text">
+    <tspan x="810" dy="0">নন্দন চত্বরে জমকালো সমাপনী অনুষ্ঠানে</tspan>
+    <tspan x="810" dy="24">বাংলার স্বাধীন চলচ্চিত্র জিতে নিল গোল্ডেন</tspan>
+    <tspan x="810" dy="24">রয়্যাল বেঙ্গল টাইগার ট্রফি। আন্তর্জাতিক</tspan>
+    <tspan x="810" dy="24">জুরির প্রশংসায় পঞ্চমুখ চলচ্চিত্র মহল।</tspan>
+    <tspan x="810" dy="24">দর্শকদের উপস্থিতি ছিল চোখে পড়ার মতো।</tspan>
+  </text>
+
+  <!-- Footer Print Bar -->
+  <line x1="35" y1="1610" x2="1165" y2="1610" stroke="#9CA3AF" stroke-width="1.5"/>
+  <text x="50" y="1635" fill="#6B7280" font-size="14">GenzNewz Media Network Pvt. Ltd. | RNI Reg. No: WBBEN/2026/89452 | Printed & Published from Kolkata</text>
+  <text x="1150" y="1635" text-anchor="end" fill="#6B7280" font-size="14">www.genznewz.com | ই-পেপার পাঠক সহায়িকা</text>
+</svg>

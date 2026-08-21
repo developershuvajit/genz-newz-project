@@ -1,73 +1,112 @@
 <?php
-// $router is already defined in config/config.php
-$router->get('/', 'Home@index');
-$router->get('/login', 'Auth@loginForm');
-$router->post('/login', 'Auth@login');
-$router->get('/logout', 'Auth@logout');
-$router->get('/archive', 'Archive@index');
-$router->get('/edition/{slug}', 'Edition@view');
-$router->get('/edition/{slug}/page/{page}', 'Page@view');
-$router->get('/article/{slug}', 'Article@view');
-$router->get('/category/{slug}', 'Category@view');
-$router->get('/search', 'Search@index');
-$router->get('/reporter/verify/{id}', 'ReporterVerify@index');
-$router->get('/download/edition/{slug}', 'Download@edition');
+/**
+ * GenzNewz — Web Routes Definition
+ */
 
-// Admin Routes
-$router->get('/admin/login', 'AdminAuth@loginForm');
-$router->post('/admin/login', 'AdminAuth@login');
-$router->get('/admin/logout', 'AdminAuth@logout');
-$router->get('/admin/dashboard', 'AdminDashboard@index');
-$router->get('/admin/editions', 'AdminEditions@index');
-$router->get('/admin/editions/create', 'AdminEditions@create');
-$router->post('/admin/editions/store', 'AdminEditions@store');
-$router->get('/admin/editions/edit/{id}', 'AdminEditions@edit');
-$router->post('/admin/editions/update/{id}', 'AdminEditions@update');
-$router->get('/admin/editions/delete/{id}', 'AdminEditions@delete');
-$router->get('/admin/editions/{id}/pages', 'AdminPages@index');
-$router->post('/admin/pages/upload', 'AdminPages@upload');
-$router->post('/admin/pages/reorder', 'AdminPages@reorder');
-$router->get('/admin/pages/delete/{id}', 'AdminPages@delete');
-$router->get('/admin/articles', 'AdminArticles@index');
-$router->get('/admin/articles/pending', 'AdminArticles@pending');
-$router->get('/admin/articles/published', 'AdminArticles@published');
-$router->get('/admin/articles/view/{id}', 'AdminArticles@view');
-$router->post('/admin/articles/approve/{id}', 'AdminArticles@approve');
-$router->post('/admin/articles/reject/{id}', 'AdminArticles@reject');
-$router->post('/admin/articles/publish/{id}', 'AdminArticles@publish');
-$router->get('/admin/categories', 'AdminCategories@index');
-$router->get('/admin/edition-types', 'AdminEditionTypes@index');
-$router->get('/admin/reporters', 'AdminReporters@index');
-$router->get('/admin/reporters/create', 'AdminReporters@create');
-$router->post('/admin/reporters/store', 'AdminReporters@store');
-$router->get('/admin/reporters/view/{id}', 'AdminReporters@view');
-$router->get('/admin/reporters/edit/{id}', 'AdminReporters@edit');
-$router->post('/admin/reporters/update/{id}', 'AdminReporters@update');
-$router->get('/admin/reporters/status/{id}', 'AdminReporters@toggleStatus');
-$router->get('/admin/reporters/id-card/{id}', 'AdminReporters@idCard');
-$router->get('/admin/settings', 'AdminSettings@index');
-$router->post('/admin/settings/update', 'AdminSettings@update');
-$router->get('/admin/notifications', 'AdminNotifications@index');
-$router->get('/admin/activity-logs', 'AdminActivityLogs@index');
-$router->get('/admin/profile', 'AdminProfile@index');
-$router->post('/admin/profile/update', 'AdminProfile@update');
+// ==========================================
+// 1. PUBLIC FRONTEND ROUTES
+// ==========================================
+Router::get('/', 'HomeController@index');
+Router::get('/archive', 'ArchiveController@index');
+Router::get('/edition/{slug}', 'EditionController@show');
+Router::get('/edition/{slug}/page/{page}', 'EditionController@page');
+Router::get('/article/{slug}', 'ArticleController@show');
+Router::get('/category/{slug}', 'CategoryController@show');
+Router::get('/search', 'SearchController@index');
+Router::get('/download/edition/{slug}', 'DownloadController@edition');
+Router::get('/reporter/verify/{reporter_id}', 'AuthController@verifyReporter');
 
-// Reporter Routes
-$router->get('/reporter/login', 'ReporterAuth@loginForm');
-$router->post('/reporter/login', 'ReporterAuth@login');
-$router->get('/reporter/logout', 'ReporterAuth@logout');
-$router->get('/reporter/dashboard', 'ReporterDashboard@index');
-$router->get('/reporter/articles', 'ReporterArticles@index');
-$router->get('/reporter/articles/create', 'ReporterArticles@create');
-$router->post('/reporter/articles/store', 'ReporterArticles@store');
-$router->get('/reporter/articles/edit/{id}', 'ReporterArticles@edit');
-$router->post('/reporter/articles/update/{id}', 'ReporterArticles@update');
-$router->get('/reporter/articles/view/{id}', 'ReporterArticles@view');
-$router->post('/reporter/articles/submit/{id}', 'ReporterArticles@submit');
-$router->post('/reporter/articles/delete/{id}', 'ReporterArticles@delete');
-$router->get('/reporter/id-card', 'ReporterIdCard@index');
-$router->get('/reporter/notifications', 'ReporterNotifications@index');
-$router->post('/reporter/notifications/read/{id}', 'ReporterNotifications@markRead');
-$router->get('/reporter/profile', 'ReporterProfile@index');
-$router->post('/reporter/profile/update', 'ReporterProfile@update');
-?>
+// Authentication routes
+Router::any('/login', 'AuthController@login');
+Router::any('/logout', 'AuthController@logout');
+
+// ==========================================
+// 2. ADMIN PORTAL ROUTES
+// ==========================================
+Router::any('/admin', 'AdminAuthController@login');
+Router::any('/admin/login', 'AdminAuthController@login');
+Router::any('/admin/logout', 'AdminAuthController@logout');
+Router::get('/admin/dashboard', 'AdminDashboardController@index');
+Router::get('/admin/profile', 'AdminAuthController@profile');
+Router::post('/admin/profile/update', 'AdminAuthController@updateProfile');
+
+// Editions
+Router::get('/admin/editions', 'AdminEditionController@index');
+Router::get('/admin/editions/create', 'AdminEditionController@create');
+Router::post('/admin/editions/store', 'AdminEditionController@store');
+Router::get('/admin/editions/edit/{id}', 'AdminEditionController@edit');
+Router::post('/admin/editions/update/{id}', 'AdminEditionController@update');
+Router::post('/admin/editions/delete/{id}', 'AdminEditionController@delete');
+
+// Pages Management
+Router::get('/admin/pages', 'AdminPageController@index');
+Router::get('/admin/editions/{id}/pages', 'AdminPageController@index');
+Router::any('/admin/pages/upload', 'AdminPageController@upload');
+Router::post('/admin/pages/delete/{id}', 'AdminPageController@delete');
+Router::post('/admin/pages/reorder', 'AdminPageController@reorder');
+
+// Articles Management
+Router::get('/admin/articles', 'AdminArticleController@index');
+Router::get('/admin/articles/pending', 'AdminArticleController@pending');
+Router::get('/admin/articles/published', 'AdminArticleController@published');
+Router::get('/admin/articles/create', 'AdminArticleController@create');
+Router::post('/admin/articles/store', 'AdminArticleController@store');
+Router::get('/admin/articles/view/{id}', 'AdminArticleController@show');
+Router::get('/admin/articles/edit/{id}', 'AdminArticleController@edit');
+Router::post('/admin/articles/update/{id}', 'AdminArticleController@update');
+Router::post('/admin/articles/approve/{id}', 'AdminArticleController@approve');
+Router::post('/admin/articles/reject/{id}', 'AdminArticleController@reject');
+Router::post('/admin/articles/delete/{id}', 'AdminArticleController@delete');
+
+// Categories & Edition Types
+Router::get('/admin/categories', 'AdminCategoryController@index');
+Router::post('/admin/categories/store', 'AdminCategoryController@store');
+Router::post('/admin/categories/delete/{id}', 'AdminCategoryController@delete');
+
+Router::get('/admin/edition-types', 'AdminEditionTypeController@index');
+Router::post('/admin/edition-types/store', 'AdminEditionTypeController@store');
+Router::post('/admin/edition-types/delete/{id}', 'AdminEditionTypeController@delete');
+
+// Reporters Management
+Router::get('/admin/reporters', 'AdminReporterController@index');
+Router::get('/admin/reporters/create', 'AdminReporterController@create');
+Router::post('/admin/reporters/store', 'AdminReporterController@store');
+Router::get('/admin/reporters/view/{id}', 'AdminReporterController@show');
+Router::get('/admin/reporters/edit/{id}', 'AdminReporterController@edit');
+Router::post('/admin/reporters/update/{id}', 'AdminReporterController@update');
+Router::post('/admin/reporters/status/{id}', 'AdminReporterController@toggleStatus');
+Router::get('/admin/reporters/id-card/{id}', 'AdminReporterController@idCard');
+
+// Media, Settings, Logs & Backups
+Router::get('/admin/media', 'AdminMediaController@index');
+Router::get('/admin/notifications', 'AdminNotificationController@index');
+Router::get('/admin/settings', 'AdminSettingController@index');
+Router::post('/admin/settings/update', 'AdminSettingController@update');
+Router::get('/admin/activity-logs', 'AdminActivityLogController@index');
+Router::get('/admin/backup', 'AdminBackupController@index');
+Router::get('/admin/backup/download', 'AdminBackupController@download');
+Router::post('/admin/backup/create', 'AdminBackupController@download');
+
+// ==========================================
+// 3. REPORTER PORTAL ROUTES
+// ==========================================
+Router::any('/reporter', 'ReporterAuthController@login');
+Router::any('/reporter/login', 'ReporterAuthController@login');
+Router::any('/reporter/logout', 'ReporterAuthController@logout');
+Router::get('/reporter/dashboard', 'ReporterDashboardController@index');
+
+// Reporter Articles
+Router::get('/reporter/articles', 'ReporterArticleController@index');
+Router::get('/reporter/articles/create', 'ReporterArticleController@create');
+Router::post('/reporter/articles/store', 'ReporterArticleController@store');
+Router::get('/reporter/articles/view/{id}', 'ReporterArticleController@show');
+Router::get('/reporter/articles/edit/{id}', 'ReporterArticleController@edit');
+Router::post('/reporter/articles/update/{id}', 'ReporterArticleController@update');
+Router::post('/reporter/articles/submit/{id}', 'ReporterArticleController@submit');
+Router::post('/reporter/articles/delete/{id}', 'ReporterArticleController@delete');
+
+// Reporter ID Card, Notifications & Profile
+Router::get('/reporter/id-card', 'ReporterIdCardController@index');
+Router::get('/reporter/notifications', 'ReporterNotificationController@index');
+Router::get('/reporter/profile', 'ReporterProfileController@index');
+Router::post('/reporter/profile/update', 'ReporterProfileController@update');

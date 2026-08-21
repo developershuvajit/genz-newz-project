@@ -1,0 +1,6 @@
+{
+  "name": "GenzNewz — Latest News & ePaper",
+  "description": "Core PHP Digital Newspaper and ePaper Management System featuring super admin panel, reporter management with automated IDs & ID cards, live interactive ePaper reader with zoom/fullscreen/thumbnails, rich article workflow, Bengli & English support, and clean URL routing.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

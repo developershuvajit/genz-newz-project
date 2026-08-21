@@ -1,40 +1,72 @@
 <?php
+/**
+ * GenzNewz — Session & Flash Message Handler
+ */
+
+declare(strict_types=1);
+
 class Session {
-    public static function start() {
-        if (session_status() === PHP_SESSION_NONE) {
-            session_start();
+    public static function start(): void {
+        if (session_status() === PHP_SESSION_NONE && !headers_sent()) {
+            @ini_set('session.cookie_httponly', '1');
+            @ini_set('session.use_only_cookies', '1');
+            @ini_set('session.cookie_samesite', 'Lax');
+            @session_start();
         }
     }
-    
-    public static function set($key, $value) {
+
+    public static function set(string $key, mixed $value): void {
+        self::start();
         $_SESSION[$key] = $value;
     }
-    
-    public static function get($key, $default = null) {
+
+    public static function get(string $key, mixed $default = null): mixed {
+        self::start();
         return $_SESSION[$key] ?? $default;
     }
-    
-    public static function has($key) {
+
+    public static function has(string $key): bool {
+        self::start();
         return isset($_SESSION[$key]);
     }
-    
-    public static function remove($key) {
+
+    public static function remove(string $key): void {
+        self::start();
         unset($_SESSION[$key]);
     }
-    
-    public static function destroy() {
-        session_destroy();
+
+    public static function destroy(): void {
+        self::start();
         $_SESSION = [];
+        if (ini_get("session.use_cookies") && !headers_sent()) {
+            $params = session_get_cookie_params();
+            setcookie(session_name(), '', time() - 42000,
+                $params["path"], $params["domain"],
+                $params["secure"], $params["httponly"]
+            );
+        }
+        if (session_status() === PHP_SESSION_ACTIVE) {
+            @session_destroy();
+        }
     }
-    
-    public static function setFlash($key, $value) {
-        $_SESSION['_flash'][$key] = $value;
+
+    public static function setFlash(string $key, string $message): void {
+        self::start();
+        $_SESSION['flash'][$key] = $message;
     }
-    
-    public static function getFlash($key, $default = null) {
-        $value = $_SESSION['_flash'][$key] ?? $default;
-        unset($_SESSION['_flash'][$key]);
-        return $value;
+
+    public static function getFlash(string $key): ?string {
+        self::start();
+        if (isset($_SESSION['flash'][$key])) {
+            $msg = $_SESSION['flash'][$key];
+            unset($_SESSION['flash'][$key]);
+            return $msg;
+        }
+        return null;
+    }
+
+    public static function hasFlash(string $key): bool {
+        self::start();
+        return isset($_SESSION['flash'][$key]);
     }
 }
-?>

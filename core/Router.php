@@ -1,116 +1,110 @@
 <?php
+/**
+ * GenzNewz — Central Request Router & Clean URL Engine
+ */
+
+declare(strict_types=1);
+
 class Router {
-    private $routes = [];
-    private $params = [];
-    private $currentRoute = '';
-    
-    public function add($route, $handler, $method = 'GET') {
-        $route = trim($route, '/');
-        $this->routes[$method][$route] = $handler;
-        return $this;
+    private static array $routes = [
+        'GET' => [],
+        'POST' => []
+    ];
+
+    public static function get(string $path, string|callable $handler): void {
+        self::$routes['GET'][$path] = $handler;
     }
-    
-    public function get($route, $handler) {
-        return $this->add($route, $handler, 'GET');
+
+    public static function post(string $path, string|callable $handler): void {
+        self::$routes['POST'][$path] = $handler;
     }
-    
-    public function post($route, $handler) {
-        return $this->add($route, $handler, 'POST');
+
+    public static function any(string $path, string|callable $handler): void {
+        self::$routes['GET'][$path] = $handler;
+        self::$routes['POST'][$path] = $handler;
     }
-    
-    public function dispatch() {
-        $method = $_SERVER['REQUEST_METHOD'];
-        $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
-        
-        // Debug: Log the URI
-        error_log("Request URI: " . $uri);
-        
-        // Remove base path for MAMP
-        $basePath = '/2026/news';
-        if (strpos($uri, $basePath) === 0) {
-            $uri = substr($uri, strlen($basePath));
+
+    public static function dispatch(string $uri, string $method): void {
+        // Strip query string and trailing slashes
+        $cleanUri = parse_url($uri, PHP_URL_PATH) ?? '/';
+        $cleanUri = rtrim($cleanUri, '/');
+        if ($cleanUri === '') {
+            $cleanUri = '/';
         }
-        
-        $uri = trim($uri, '/');
-        
-        // Debug: Log the cleaned URI
-        error_log("Cleaned URI: " . $uri);
-        
-        // Handle static assets
-        if (strpos($uri, 'assets/') === 0) {
-            return false;
+
+        // Redirection of old .php files
+        if (str_ends_with($cleanUri, '.php')) {
+            $newUri = preg_replace('~\.php$~i', '', $cleanUri);
+            if ($newUri === '/index') $newUri = '/';
+            header("HTTP/1.1 301 Moved Permanently");
+            header("Location: {$newUri}");
+            exit;
         }
-        
-        // Debug: Log all routes
-        error_log("Available GET routes: " . print_r(array_keys($this->routes['GET'] ?? []), true));
-        
-        // Find matching route
-        foreach ($this->routes[$method] ?? [] as $route => $handler) {
-            $pattern = preg_replace('/\{([a-z]+)\}/', '([^/]+)', $route);
-            $pattern = '#^' . $pattern . '$#';
-            
-            // Debug: Check if route matches
-            error_log("Checking route: $route with pattern: $pattern against URI: $uri");
-            
-            if (preg_match($pattern, $uri, $matches)) {
-                array_shift($matches);
-                $this->params = $matches;
-                $this->currentRoute = $route;
-                error_log("Route matched: $route");
-                return $this->handle($handler);
+
+        $methodRoutes = self::$routes[$method] ?? [];
+
+        // Direct exact match
+        if (isset($methodRoutes[$cleanUri])) {
+            self::executeHandler($methodRoutes[$cleanUri], []);
+            return;
+        }
+
+        // Dynamic parameterized match (e.g., /edition/{slug}/page/{page})
+        foreach ($methodRoutes as $routePattern => $handler) {
+            $pattern = preg_replace('~\{([a-zA-Z0-9_]+)\}~', '(?P<$1>[^/]+)', $routePattern);
+            $pattern = "~^" . $pattern . "$~u";
+
+            if (preg_match($pattern, $cleanUri, $matches)) {
+                $params = array_filter($matches, 'is_string', ARRAY_FILTER_USE_KEY);
+                self::executeHandler($handler, $params);
+                return;
             }
         }
-        
-        // 404 Not Found
-        error_log("No route found for URI: $uri");
-        $this->handle404();
+
+        // Route not found -> 404
+        http_response_code(404);
+        require_once ROOT_PATH . '/controllers/HomeController.php';
+        $home = new HomeController();
+        $home->error404();
     }
-    
-    private function handle($handler) {
+
+    private static function executeHandler(string|callable $handler, array $params): void {
+        $positionalParams = array_values($params);
+
         if (is_callable($handler)) {
-            return call_user_func_array($handler, $this->params);
+            call_user_func_array($handler, $positionalParams);
+            return;
         }
-        
-        if (is_string($handler) && strpos($handler, '@') !== false) {
-            list($controller, $method) = explode('@', $handler);
-            $controllerClass = $controller . 'Controller';
-            $controllerPath = ROOT_PATH . '/controllers/' . $controllerClass . '.php';
-            
-            error_log("Looking for controller: $controllerPath");
-            
-            if (file_exists($controllerPath)) {
-                require_once $controllerPath;
-                if (class_exists($controllerClass)) {
-                    $obj = new $controllerClass();
-                    return call_user_func_array([$obj, $method], $this->params);
-                } else {
-                    error_log("Class $controllerClass not found");
-                }
-            } else {
-                error_log("Controller file not found: $controllerPath");
+
+        if (str_contains($handler, '@')) {
+            [$controllerName, $action] = explode('@', $handler);
+
+            // Locate controller file
+            $controllerPath = ROOT_PATH . '/controllers/' . $controllerName . '.php';
+            if (str_starts_with($controllerName, 'Admin')) {
+                $controllerPath = ROOT_PATH . '/admin/controllers/' . $controllerName . '.php';
+            } elseif (str_starts_with($controllerName, 'Reporter')) {
+                $controllerPath = ROOT_PATH . '/reporter/controllers/' . $controllerName . '.php';
             }
+
+            if (!file_exists($controllerPath)) {
+                http_response_code(500);
+                die("Controller {$controllerName} not found at {$controllerPath}");
+            }
+
+            require_once $controllerPath;
+            $controller = new $controllerName();
+
+            if (!method_exists($controller, $action)) {
+                http_response_code(500);
+                die("Action {$action} does not exist in {$controllerName}");
+            }
+
+            call_user_func_array([$controller, $action], $positionalParams);
+            return;
         }
-        
-        $this->handle404();
-    }
-    
-    private function handle404() {
-        header("HTTP/1.0 404 Not Found");
-        $errorView = VIEWS_PATH . '/errors/404.php';
-        if (file_exists($errorView)) {
-            require_once $errorView;
-        } else {
-            echo "404 - Page Not Found (Error view not found)";
-        }
-        exit;
-    }
-    
-    public function getParams() {
-        return $this->params;
-    }
-    
-    public function getCurrentRoute() {
-        return $this->currentRoute;
+
+        http_response_code(500);
+        die("Invalid route handler specified.");
     }
 }
-?>

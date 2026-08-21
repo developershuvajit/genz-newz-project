@@ -1,34 +1,50 @@
 <?php
-require_once 'constants.php';
-require_once 'database.php';
+/**
+ * GenzNewz — Global Configuration
+ */
 
-// Error Reporting (Production: 0)
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
+require_once __DIR__ . '/constants.php';
 
-// Session Configuration
-ini_set('session.cookie_httponly', 1);
-ini_set('session.use_only_cookies', 1);
-ini_set('session.cookie_secure', 0); // Set to 1 for HTTPS
-session_name(SESSION_NAME);
-session_start();
-
-// Include Core Files
-require_once ROOT_PATH . '/core/Session.php';
-require_once ROOT_PATH . '/core/Helper.php';
-require_once ROOT_PATH . '/core/Validator.php';
-require_once ROOT_PATH . '/core/CSRF.php';
-require_once ROOT_PATH . '/core/Model.php';
-require_once ROOT_PATH . '/core/Controller.php';
-require_once ROOT_PATH . '/core/Auth.php';
-require_once ROOT_PATH . '/core/Router.php';
-
-// Initialize Router FIRST
-$router = new Router();
-
-// Then load routes
-require_once ROOT_PATH . '/routes/web.php';
-
-// Dispatch router
-$router->dispatch();
-?>
+return [
+    'app' => [
+        'name' => APP_NAME,
+        'title' => APP_TITLE,
+        'tagline' => APP_TAGLINE,
+        'timezone' => 'Asia/Kolkata',
+        'debug' => true,
+        'locale' => 'bn_IN',
+    ],
+    'database' => [
+        'driver' => getenv('DB_DRIVER') ?: 'sqlite', // 'mysql' or 'sqlite'
+        'mysql' => [
+            'host' => getenv('DB_HOST') ?: '127.0.0.1',
+            'port' => getenv('DB_PORT') ?: '3306',
+            'database' => getenv('DB_NAME') ?: 'genznewz',
+            'username' => getenv('DB_USER') ?: 'root',
+            'password' => getenv('DB_PASS') ?: '',
+            'charset' => 'utf8mb4',
+            'collation' => 'utf8mb4_unicode_ci',
+        ],
+        'sqlite' => [
+            'path' => STORAGE_PATH . '/database.sqlite',
+        ]
+    ],
+    'uploads' => [
+        'max_file_size' => 20 * 1024 * 1024, // 20MB
+        'allowed_image_types' => ['image/jpeg', 'image/png', 'image/webp', 'image/jpg'],
+        'allowed_pdf_types' => ['application/pdf'],
+        'page_sizes' => [
+            'thumb' => [300, 420],
+            'medium' => [800, 1120],
+            'original' => [1800, 2520],
+        ]
+    ],
+    'auth' => [
+        'session_lifetime' => 86400 * 7, // 7 days
+        'password_min_length' => 6,
+    ],
+    'pagination' => [
+        'per_page' => 12,
+        'admin_per_page' => 15,
+    ]
+];
