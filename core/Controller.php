@@ -17,4 +17,7 @@ class Controller {
     }
     
     protected function redirect($url) {
-        Helper
+        Helper::redirect($url);
+    }
+}
+?>
